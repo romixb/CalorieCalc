@@ -18,31 +18,14 @@ namespace CalorieCalc
         private static int ParameterId = 0;
         private static int MealID = 0;
 
-        public Parameter AddOrUpdateParameters(Parameter parameter)
+        public string AddOrUpdateParameters(Parameter parameter)
         {
-            
 
-          
-            if (parameter.IdField == -1)
-            {
-                parameter.IdField = ParameterId;
-                ObjectStorage.Parameters.Add(ParameterId, parameter);
-                ParameterId++;
-            }else
-            {
-                int id = (int)parameter.IdField;
-                if (ObjectStorage.Parameters.ContainsKey(id))
-                {
-                    ObjectStorage.Parameters[id] = parameter;
-                }
-                else
-                {
-                    ObjectStorage.Parameters.Add(ParameterId, parameter);
-                    ParameterId++;
-                }
-                
-            }
-            return parameter;
+            parameter.IdField = ParameterId;
+            ObjectStorage.Parameters.Add(ParameterId, parameter);
+            ParameterId++;
+
+            return "Parameter saved";
         }
 
         public Dictionary<string, Product> GetAllProducts()
@@ -53,11 +36,14 @@ namespace CalorieCalc
         public CalorieLimit GetCalLimits()
         {
             var newLimit = new CalorieLimit();
-            var param = ObjectStorage.Parameters[ParameterId];
+            var param = ObjectStorage.Parameters[ParameterId - 1];
 
-            if (param.Sex == true){
-                newLimit.Limit =  (10 * param.Weight + 6.25 * param.Height - 5 * param.Age + 5) * ObjectStorage.LifeStyleRate[param.LifeStyle];
-            }else{
+            if (param.Sex == true)
+            {
+                newLimit.Limit = (10 * param.Weight + 6.25 * param.Height - 5 * param.Age + 5) * ObjectStorage.LifeStyleRate[param.LifeStyle];
+            }
+            else
+            {
                 newLimit.Limit = (10 * param.Weight + 6.25 * param.Height - 5 * param.Age - 161) * ObjectStorage.LifeStyleRate[param.LifeStyle];
             }
 
@@ -72,16 +58,16 @@ namespace CalorieCalc
             try
             {
                 meal = ObjectStorage.Meal[id];
-            
+
             }
-           catch(Exception e)
+            catch (KeyNotFoundException ex)
             {
                 throw new KeyNotFoundException("KEY NOT FOUND");
             }
             return meal;
         }
 
-        public Dictionary <int, Parameter> GetParameters()
+        public Dictionary<int, Parameter> GetParameters()
         {
             return ObjectStorage.Parameters;
         }
@@ -91,21 +77,23 @@ namespace CalorieCalc
             Product product;
             try
             {
-                 product = ObjectStorage.Products[name];
+                product = ObjectStorage.Products[name];
 
             }
-            catch(Exception E)
+            catch (Exception E)
             {
                 throw new KeyNotFoundException("KEY NOT FOUND");
             }
             return product;
         }
 
-        public Meal SaveMeal(Meal meal)
+        public string SaveMeal(Meal meal)
         {
-             ObjectStorage.Meal.Add(meal.MealID, meal);
-     
-            return meal;
+            meal.MealID = MealID;
+            ObjectStorage.Meal.Add(meal.MealID, meal);
+            MealID++;
+
+            return "Meal Saved";
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CalorieCalc.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -13,7 +14,7 @@ namespace CalorieCalc
     public interface ICalorieCalc
     {
         [OperationContract]
-        Parameter AddOrUpdateParameters(Parameter parameter);
+        string AddOrUpdateParameters(Parameter parameter);
 
         [OperationContract]
         Dictionary<int, Parameter> GetParameters();
@@ -25,14 +26,14 @@ namespace CalorieCalc
         Meal GetMeal(int id);
 
         [OperationContract]
-        Meal SaveMeal(Meal meal);
+        string SaveMeal(Meal meal);
 
         [OperationContract]
         Product GetProduct(string name);
 
         [OperationContract]
         Dictionary<string, Product> GetAllProducts();
-
+        
     }
 }
 

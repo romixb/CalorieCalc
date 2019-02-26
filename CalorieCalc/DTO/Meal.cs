@@ -9,13 +9,13 @@ namespace CalorieCalc
     [DataContract]
     public class Meal
     {
-        [DataMember]
-        public DateTime Date;
+        [DataMember(IsRequired = true)]
+        public DateTime Date { get; set; }
 
         [DataMember]
-        public List<Product> Products;
+        public List<Product> Products { get; set; }
 
         [DataMember]
-        public int MealID;
+        public int MealID { get; set; }
     }
 }

@@ -11,10 +11,7 @@ namespace CalorieCalc
     public class Parameter
     {
         [DataMember]
-        public int? IdField { get; set; } 
-
-        [DataMember]
-        public bool? InitEnter { get; set; }
+        public int? IdField { get; set; } = 0;
 
         [DataMember(IsRequired = true)]
         public bool Sex { get; set; }
@@ -32,8 +29,7 @@ namespace CalorieCalc
         public LifeStyle LifeStyle { get; set; }
 
         [DataMember(IsRequired = true)]
-        [OptionalField]
-        public DateTime Date;
+        public DateTime Date { get; set; }
     }
 
     [DataContract]
