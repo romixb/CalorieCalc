@@ -36,19 +36,26 @@ namespace CalorieCalc
         public CalorieLimit GetCalLimits()
         {
             var newLimit = new CalorieLimit();
-            var param = ObjectStorage.Parameters[ParameterId - 1];
-
-            if (param.Sex == true)
+            if (ObjectStorage.Parameters.Count != 0)
             {
-                newLimit.Limit = (10 * param.Weight + 6.25 * param.Height - 5 * param.Age + 5) * ObjectStorage.LifeStyleRate[param.LifeStyle];
+                var param = ObjectStorage.Parameters.Last();
+
+                if (param.Value.Sex == true)
+                {
+                    newLimit.Limit = (10 * param.Value.Weight + 6.25 * param.Value.Height - 5 * param.Value.Age + 5) * ObjectStorage.LifeStyleRate[param.Value.LifeStyle];
+                }
+                else
+                {
+                    newLimit.Limit = (10 * param.Value.Weight + 6.25 * param.Value.Height - 5 * param.Value.Age - 161) * ObjectStorage.LifeStyleRate[param.Value.LifeStyle];
+                }
+                ObjectStorage.Calories.Add(ParameterId, newLimit);
+                return newLimit;
             }
             else
             {
-                newLimit.Limit = (10 * param.Weight + 6.25 * param.Height - 5 * param.Age - 161) * ObjectStorage.LifeStyleRate[param.LifeStyle];
+                throw new ArgumentNullException("NO PARAMETER FOUND");
             }
-
-            ObjectStorage.Calories.Add(ParameterId, newLimit);
-            return newLimit;
+            
         }
 
         public Meal GetMeal(int id)
