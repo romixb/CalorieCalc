@@ -48,11 +48,11 @@ namespace CalorieCalc
 
                 if (param.Value.Sex == true)
                 {
-                    newLimit.Limit = (10 * param.Value.Weight + 6.25 * param.Value.Height - 5 * param.Value.Age + 5) * ObjectStorage.LifeStyleRate[param.Value.LifeStyle];
+                    newLimit.Limit = ((10 * param.Value.Weight) + (6.25 * param.Value.Height) - (5 * param.Value.Age) + 5) * ObjectStorage.LifeStyleRate[param.Value.LifeStyle];
                 }
                 else
                 {
-                    newLimit.Limit = (10 * param.Value.Weight + 6.25 * param.Value.Height - 5 * param.Value.Age - 161) * ObjectStorage.LifeStyleRate[param.Value.LifeStyle];
+                    newLimit.Limit = ((10 * param.Value.Weight) + (6.25 * param.Value.Height) - (5 * param.Value.Age) - 161) * ObjectStorage.LifeStyleRate[param.Value.LifeStyle];
                 }
                 ObjectStorage.Calories.Add(ParameterId, newLimit);
                 return newLimit;
