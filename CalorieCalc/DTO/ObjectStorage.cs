@@ -41,7 +41,10 @@ namespace CalorieCalc.DTO
 
         };
 
-        public static Dictionary<int, Meal> Meal = new Dictionary<int, Meal>();
+        public static Dictionary<int, Meal> Meal = new Dictionary<int, Meal>()
+        {
+            {1, new Meal{ Date = new DateTime(2018, 01, 01 ),  MealID = 1, Products = new List<Product>{ Products["Big Mac"] } } }
+        };
 
     }
 }

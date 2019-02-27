@@ -26,7 +26,7 @@ namespace CalorieCalc
         Meal GetMeal(int id);
 
         [OperationContract]
-        string SaveMeal(Meal meal);
+        string SaveMeal(int MealId,  List<string> ProductNames );
 
         [OperationContract]
         Product GetProduct(string name);

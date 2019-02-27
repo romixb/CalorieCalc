@@ -16,7 +16,9 @@ namespace CalorieCalc
     {
 
         private static int ParameterId = 0;
-        private static int MealID = 0;
+        private static int MealID = 1;
+
+
 
         public string AddOrUpdateParameters(Parameter parameter)
         {
@@ -28,10 +30,14 @@ namespace CalorieCalc
             return "Parameter saved";
         }
 
+
+
         public Dictionary<string, Product> GetAllProducts()
         {
             return ObjectStorage.Products;
         }
+
+
 
         public CalorieLimit GetCalLimits()
         {
@@ -58,6 +64,8 @@ namespace CalorieCalc
             
         }
 
+
+
         public Meal GetMeal(int id)
         {
             Meal meal;
@@ -79,6 +87,8 @@ namespace CalorieCalc
             return ObjectStorage.Parameters;
         }
 
+
+
         public Product GetProduct(string name)
         {
             Product product;
@@ -94,13 +104,41 @@ namespace CalorieCalc
             return product;
         }
 
-        public string SaveMeal(Meal meal)
+
+
+        public string SaveMeal(int mealID, List <string> productNames)
         {
-            meal.MealID = MealID;
-            ObjectStorage.Meal.Add(meal.MealID, meal);
+            if (ObjectStorage.Meal.ContainsKey(mealID))
+            {
+                var meal = ObjectStorage.Meal[mealID];
+
+                foreach (string name in productNames)
+                {
+                    meal.Products.Add(ObjectStorage.Products[name]);
+                }
+
+                ObjectStorage.Meal[mealID] = meal;
+            }
+            else
+            {
+                var meal = new Meal
+                {
+                    Date = DateTime.Now,
+                    MealID = CalorieCalcService.MealID,
+                };
+
+                foreach (string name in productNames)
+                {
+                    meal.Products.Add(ObjectStorage.Products[name]);
+                }
+
+                ObjectStorage.Meal.Add(mealID, meal);
+            }
+
+
             MealID++;
 
-            return "Meal Saved";
+            return $"Meal {MealID - 1} Saved";
         }
     }
 
