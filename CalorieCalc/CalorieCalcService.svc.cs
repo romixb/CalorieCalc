@@ -125,6 +125,7 @@ namespace CalorieCalc
                 {
                     Date = DateTime.Now,
                     MealID = CalorieCalcService.MealID,
+                    Products =new List<Product>(),
                 };
 
                 foreach (string name in productNames)
@@ -134,11 +135,10 @@ namespace CalorieCalc
 
                 ObjectStorage.Meal.Add(mealID, meal);
             }
-
-
             MealID++;
 
-            return $"Meal {MealID - 1} Saved";
+            return $"Meal {mealID} Saved";
+            
         }
     }
 
